@@ -1,0 +1,42 @@
+name: Trigger auto deployment for pevo82-album-api-dev-2
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/pevo82-album-api-dev-2-AutoDeployTrigger-175b72ee-267d-4e51-894e-98642df4df8c.yml'
+
+  # Allow mannually trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.PEVO82ALBUMAPIDEV2_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: pevo82flaskacr1dev2
+          registryUsername: ${{ secrets.PEVO82ALBUMAPIDEV2_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.PEVO82ALBUMAPIDEV2_REGISTRY_PASSWORD }}
+          containerAppName: pevo82-album-api-dev-2
+          resourceGroup: pevo82-capp-flask-1-dev-2
+          imageToBuild: pevo82flaskacr1dev2/pevo82-flaskcontainer:${{ github.sha }}
+          
+
+     
+
