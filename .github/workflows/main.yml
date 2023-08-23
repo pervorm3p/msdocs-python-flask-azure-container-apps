@@ -1,0 +1,6 @@
+jobs:
+  prod:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - run: ./deploy.sh --keys ${{ secrets.AZURE_CREDENTIALS}}
