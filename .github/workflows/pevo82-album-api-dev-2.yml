@@ -24,6 +24,6 @@ jobs:
         uses: azure/container-apps-deploy-action@v1
         with:
           appSourcePath: ${{ github.workspace }}
-          acrName: pevo82flaskacr1dev2
+          acrName: pevo82acracaflask1dev2
           containerAppName: pevo82-album-api-dev-2
-          resourceGroup: pevo82-capp-flask-1-dev-2
+          resourceGroup: pevo82-aca-flask-1-dev-2
